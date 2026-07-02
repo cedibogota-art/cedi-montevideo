@@ -1420,8 +1420,10 @@ async function syncPending() {
   const pending = JSON.parse(localStorage.getItem(PENDING_KEY) || '[]');
   if (!pending.length) return;
   try {
-        const payload = encodeURIComponent(JSON.stringify({ records: pending, registradoPor: cfg.nombre }));
-            await fetch(cfg.url + '?action=sync&data=' + payload, { mode:'no-cors' });
+    var tMap = {vehicles:'vehiculos',reception:'recepción',dispatch:'despacho',exit:'salida'};
+    var norm = pending.map(function(r){ var n=Object.assign({},r); n.type=tMap[r.type]||r.type; if(r.date) n.fecha=r.date; if(r.time) n.hora=r.time; return n; });
+    const payload = encodeURIComponent(JSON.stringify({ records: norm, registradoPor: cfg.nombre }));
+    await fetch(cfg.url + '?action=sync&data=' + payload, { mode:'no-cors' });
     localStorage.setItem(PENDING_KEY, '[]');
     updateConfigCounts();
   } catch(e) {}
