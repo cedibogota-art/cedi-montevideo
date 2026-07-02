@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#1A1A1A">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title>CEDI Montevideo</title>
+<title>CEDI Control</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   /* ── SHARED ROOT VARIABLES ── */
@@ -815,7 +815,7 @@
       </svg>
     </div>
     <div>
-      <div class="topbar-title">CEDI Montevideo</div>
+      <div class="topbar-title">CEDI Control</div>
       <div class="topbar-sub">Protocolo de Seguridad</div>
     </div>
   </div>
@@ -834,7 +834,7 @@
             stroke="white" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     <h2>Control Operativo</h2>
-    <p>CEDI Montevideo — Protocolo de Seguridad</p>
+    <p>CEDI Control — Protocolo de Seguridad</p>
     <div class="home-date" id="home-date"></div>
   </div>
 
@@ -1160,7 +1160,7 @@
   </div>
 
   <div style="padding:16px; text-align:center;">
-    <div style="font-size:12px; color:var(--mid-gray)">CEDI Montevideo Control v1.1</div>
+    <div style="font-size:12px; color:var(--mid-gray)">CEDI Control v1.2</div>
     <div style="font-size:11px; color:var(--light-gray); margin-top:4px">Protocolo de Seguridad · 2026</div>
   </div>
 </div>
@@ -1380,10 +1380,11 @@ function dashCheckPassword() {
 const STORAGE_KEY = 'cedi_mtv_records';
 const PENDING_KEY = 'cedi_mtv_pending';
 const CONFIG_KEY  = 'cedi_mtv_config';
+const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwkH3wrdl28g47emBWudJScgOVUQ00NfyDCPfcmV0dJ6f3LJgfgjp5P2YRNF5OlSoAnEw/exec';
 
 let currentFilter = 'all';
 
-function loadConfig() { return JSON.parse(localStorage.getItem(CONFIG_KEY) || '{"url":"","nombre":""}'); }
+function loadConfig() { var c=JSON.parse(localStorage.getItem(CONFIG_KEY)||'{"url":"","nombre":""}'); if(!c.url) c.url=DEFAULT_SCRIPT_URL; return c; }
 function saveConfig() {
   localStorage.setItem(CONFIG_KEY, JSON.stringify({
     url: document.getElementById('cfg-url').value.trim(),
