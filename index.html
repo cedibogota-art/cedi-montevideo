@@ -1419,10 +1419,8 @@ async function syncPending() {
   const pending = JSON.parse(localStorage.getItem(PENDING_KEY) || '[]');
   if (!pending.length) return;
   try {
-    await fetch(cfg.url, { method:'POST', mode:'no-cors',
-      body: new URLSearchParams({
-        data: JSON.stringify({ records: pending, registradoPor: cfg.nombre })
-      }) });
+        const payload = encodeURIComponent(JSON.stringify({ records: pending, registradoPor: cfg.nombre }));
+            await fetch(cfg.url + '?action=sync&data=' + payload, { mode:'no-cors' });
     localStorage.setItem(PENDING_KEY, '[]');
     updateConfigCounts();
   } catch(e) {}
